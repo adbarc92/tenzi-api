@@ -2,8 +2,6 @@ package com.barclay.tenziapi.services
 
 import com.barclay.tenziapi.exceptions.UserNotFoundException
 import com.barclay.tenziapi.models.database.StudyGuide
-import com.barclay.tenziapi.models.dto.StudyGuideDTO
-import com.barclay.tenziapi.models.dto.toDTO
 import com.barclay.tenziapi.repositories.StudyGuideRepository
 import com.barclay.tenziapi.repositories.UserRepository
 import org.slf4j.LoggerFactory

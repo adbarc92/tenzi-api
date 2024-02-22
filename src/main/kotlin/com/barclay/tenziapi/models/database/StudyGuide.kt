@@ -26,10 +26,10 @@ class StudyGuide(
     val lastUpdatedTs: Instant = Instant.now(),
 
     @OneToMany
-    val categories: List<Category>,
+    val categories: List<Category> = emptyList(),
 
     @OneToMany
-    val terms: List<Term>,
+    val terms: List<Term> = emptyList(),
 
     @OneToMany
     val owner: List<User>,

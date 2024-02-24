@@ -3,6 +3,7 @@ package com.barclay.tenziapi.models.database
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToMany
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
@@ -26,11 +27,14 @@ class StudyGuide(
     val lastUpdatedTs: Instant = Instant.now(),
 
     @OneToMany
-    val categories: List<Category>,
+    val categories: List<Category> = emptyList(),
 
     @OneToMany
-    val terms: List<Term>,
+    val terms: List<Term> = emptyList(),
+
+    @ManyToOne
+    val owner: User,
 
     @OneToMany
-    val owner: List<User>,
+    val collaborators: List<User> = emptyList(),
 )

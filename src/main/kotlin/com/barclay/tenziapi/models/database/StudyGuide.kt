@@ -36,5 +36,5 @@ class StudyGuide(
     val owner: User,
 
     @OneToMany
-    val collaborators: List<User>,
+    val collaborators: List<User> = emptyList(),
 )

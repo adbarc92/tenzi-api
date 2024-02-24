@@ -18,7 +18,7 @@ class StudyGuideService(
     fun createStudyGuide(ownerId: String): StudyGuide {
         val owner =
             userRepository.findUserByFirebaseId(firebaseId = ownerId) ?: throw UserNotFoundException("No user $ownerId")
-        return studyGuideRepository.save(StudyGuide(owner = listOf(owner)))
+        return studyGuideRepository.save(StudyGuide(owner = owner))
     }
 
     fun getStudyGuideByIdAndOwnerId(studyGuideId: String, ownerId: String): StudyGuide {
@@ -26,5 +26,11 @@ class StudyGuideService(
             userRepository.findUserByFirebaseId(firebaseId = ownerId) ?: throw UserNotFoundException("No user $ownerId")
         return studyGuideRepository.findByIdAndOwner(id = studyGuideId, owner = owner)
             ?: throw StudyGuideNotFoundException("No study guide $studyGuideId found for user $ownerId")
+    }
+
+    fun getStudyGuides(ownerId: String): List<StudyGuide> {
+        val owner =
+            userRepository.findUserByFirebaseId(firebaseId = ownerId) ?: throw UserNotFoundException("No user $ownerId")
+        return studyGuideRepository.findAllByOwner(owner = owner)
     }
 }

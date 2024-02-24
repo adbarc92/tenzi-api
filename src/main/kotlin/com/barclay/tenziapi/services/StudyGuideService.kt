@@ -1,5 +1,6 @@
 package com.barclay.tenziapi.services
 
+import com.barclay.tenziapi.exceptions.StudyGuideNotFoundException
 import com.barclay.tenziapi.exceptions.UserNotFoundException
 import com.barclay.tenziapi.models.database.StudyGuide
 import com.barclay.tenziapi.repositories.StudyGuideRepository
@@ -15,7 +16,15 @@ class StudyGuideService(
     private val log = LoggerFactory.getLogger(this::class.java)
 
     fun createStudyGuide(ownerId: String): StudyGuide {
-        val owner = userRepository.findUserByFirebaseId(firebaseId = ownerId) ?: throw UserNotFoundException("No user $ownerId")
+        val owner =
+            userRepository.findUserByFirebaseId(firebaseId = ownerId) ?: throw UserNotFoundException("No user $ownerId")
         return studyGuideRepository.save(StudyGuide(owner = listOf(owner)))
+    }
+
+    fun getStudyGuideByIdAndOwnerId(studyGuideId: String, ownerId: String): StudyGuide {
+        val owner =
+            userRepository.findUserByFirebaseId(firebaseId = ownerId) ?: throw UserNotFoundException("No user $ownerId")
+        return studyGuideRepository.findByIdAndOwner(id = studyGuideId, owner = owner)
+            ?: throw StudyGuideNotFoundException("No study guide $studyGuideId found for user $ownerId")
     }
 }
